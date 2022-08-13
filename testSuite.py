@@ -22,7 +22,7 @@ class TestExampleQuestions(unittest.TestCase):
     
     def test_question_five(self):
         actual=ExampleQuestions.questionFive([Constants.testStringMultipleA,Constants.testStringMultipleB,Constants.testStringMultipleC],'FILTER_NUMBER is 2','EXPOSURE_DURATION')
-        self.assertEqual(actual,[192,209])
+        self.assertEqual(actual,'192,209')
 
 if __name__ == '__main__':
     unittest.main()

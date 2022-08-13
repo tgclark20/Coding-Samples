@@ -105,7 +105,6 @@ def questionFour(inputStrings, filter, keyword):
 def questionFive(inputStrings,filter,keyword):
     inputDict =dict()
     selectedValues=[]
-
     filter=filter.split(" is ")
 
     for index,inputString in enumerate(inputStrings):
@@ -116,10 +115,9 @@ def questionFive(inputStrings,filter,keyword):
             tempDict[values[0]]=values[1]
         inputDict[index]=tempDict
 
-    for i in inputDict:
-        if i[filter[0]]==filter[1]:
-            selectedValues.append(i[keyword])
+    for i,j in inputDict.items():
+        if (j[filter[0]].replace('"','')==filter[1]):
+            selectedValues.append(j[keyword])
 
-    return selectedValues
-
-    
+    output=','.join(selectedValues)
+    return output
