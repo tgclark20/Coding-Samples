@@ -40,7 +40,7 @@ def questionTwo(inputString, keyword):
     return inputDict[keyword].get('value')
 
 
-#Example Question 3
+# Example Question 3
 def questionThree(inputString, unit ,keyword):
     inputString= inputString.replace(' = ',' ')
     inputDict =dict()
@@ -75,7 +75,7 @@ def questionThree(inputString, unit ,keyword):
         return "***Unit mismatch***"
 
 
-#Example Question 4
+# Example Question 4
 def questionFour(inputStrings, filter, keyword):
     inputDict =dict()
     selectedValues=[]
@@ -101,4 +101,25 @@ def questionFour(inputStrings, filter, keyword):
         return max(selectedValues)
 
 
+# Example Question 5
+def questionFive(inputStrings,filter,keyword):
+    inputDict =dict()
+    selectedValues=[]
 
+    filter=filter.split(" is ")
+
+    for index,inputString in enumerate(inputStrings):
+        inputString= inputString.replace(' = ',' ')
+        tempDict=dict()
+        for element in inputString.split('\n'):
+            values = element.split()
+            tempDict[values[0]]=values[1]
+        inputDict[index]=tempDict
+
+    for i in inputDict:
+        if i[filter[0]]==filter[1]:
+            selectedValues.append(i[keyword])
+
+    return selectedValues
+
+    
