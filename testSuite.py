@@ -1,3 +1,11 @@
+#----------------------------------------------------------------------------
+# Created By  : Timothy Clark
+# Created Date: 08/12/2022
+# Description: Test suite for automated testing of ExampleQuestions.py
+#              running this file will run a test for all five as outlined in
+#              coding sample questions
+# ---------------------------------------------------------------------------
+
 import unittest
 import ExampleQuestions
 import Constants
