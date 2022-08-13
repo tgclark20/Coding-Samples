@@ -10,4 +10,4 @@
  All questions are answered within the **ExampleQuestions.py** file. **testSuite.py** has also been provided for quick unit testing of the requirements provided in the prompt.
 
 # Acknowledgements
- Thank you for taking the time to review my submission.  I look forward to hearing your feedback and how i can contribute to USGS.
+ Thank you for taking the time to review my submission. I look forward to hearing your feedback and how I can contribute to USGS.
