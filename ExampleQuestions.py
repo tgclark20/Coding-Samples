@@ -11,9 +11,12 @@ timeEncodings=Constants.timeEncodings
 measurementEncodings=Constants.measurmentEncodings
 standardConversions=Constants.standardConversions
 
+
 # Example Question 1
 def questionOne(inputString, keyword):
     
+    inputString= inputString.replace(' = ',' ')
+
     inputDict = dict((x.strip(), y.strip())  
         for x, y in (element.split(' ')  
             for element in inputString.split('\n'))) 
@@ -52,7 +55,7 @@ def questionThree(inputString, unit ,keyword):
     selectedValue=float(inputDict[keyword].get('value'))
     selectedUnit=inputDict[keyword].get('unit')
     unitExpanded=encodings[selectedUnit]
-    print(unit, unitExpanded)
+
     if unitExpanded in measurementEncodings and unit in measurementEncodings:
        return (selectedValue*standardConversions[unitExpanded])/(standardConversions[unit])
 
@@ -70,5 +73,32 @@ def questionThree(inputString, unit ,keyword):
             return "an Exception has Occurred"
     else:
         return "***Unit mismatch***"
+
+
+#Example Question 4
+def questionFour(inputStrings, filter, keyword):
+    inputDict =dict()
+    selectedValues=[]
+    for index,inputString in enumerate(inputStrings):
+        inputString= inputString.replace(' = ',' ')
+        tempDict=dict()
+        for element in inputString.split('\n'):
+            values = element.split()
+            tempDict[values[0]]=values[1]
+        inputDict[index]=tempDict
+
+
+    for i,j in inputDict.items():
+        try:
+            float(j[keyword])
+            selectedValues.append(float(j[keyword]))
+        except:
+            continue
+
+    if filter=='Minimum':
+        return min(selectedValues)
+    if filter=='Maximum':
+        return max(selectedValues)
+
 
 
