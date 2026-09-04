@@ -88,9 +88,9 @@ jobs:
       steps:
         - name: get previous release date
           run: |
-            Current_Date=`date +%u`
+            Current_Date=$(date +%u)
             sum=$((-3 - $Current_Date))
-            echo 'PREV_DATE=$(date -d "$sum days" +%Y%m%d)' >>$GITHUB_ENV
+            echo "PREV_DATE=$(date -d "$sum days" +%Y%m%d)" >> $GITHUB_ENV
         - name: Delete Branch
           run: |
             RELEASE_BRANCH= "Release-COMM-${PREV_DATE}"
