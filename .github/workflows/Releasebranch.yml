@@ -18,21 +18,22 @@ jobs:
 
         - name: Get Release Dates
           run: |
-            Current_Date=`date +%u`
-            sum=$((18-$Current_Date))
-            echo 'RELEASE_BRANCH_DATE= $(date -d "$sum days" +%Y%m%d)' >>$GITHUB_ENV
-
-
+            Current_Date=$(date +%u)
+            sum=$((18 - Current_Date))
+            echo "RELEASE_BRANCH_DATE=$(date -d "$sum days" +%Y%m%d)" >> $GITHUB_ENV
+        
         - name: Create 6pm Branch
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
-            RELEASE_BRANCH= "Release-6PM-$env.RELEASE_BRANCH_DATE"
-            git checkout -b $RELEASE_BRANCH
+            RELEASE_BRANCH="Release-6PM-${RELEASE_BRANCH_DATE}"
+            git checkout -b "$RELEASE_BRANCH"
             git commit --allow empty -m "Initial Commit for $RELEASE_BRANCH"
-            git push origin $RELEASE_BRANCH  
+            git push origin "$RELEASE_BRANCH"
             gh pr create \
-              --title "6pm release for $env.RELEASE_BRANCH_DATE" \
+              --title "6pm release for ${RELEASE_BRANCH_DATE}" \
               --base main \
-              --head $RELEASE_BRANCH 
+              --head "$RELEASE_BRANCH"
 
         
         - name : Reset Branch
