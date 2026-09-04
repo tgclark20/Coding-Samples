@@ -1,0 +1,67 @@
+name: Release Branch Management
+
+on:
+  schedule:
+    # Runs every Friday morning at 7 am. 
+    - cron: '* 7 * * 5'
+  workflow_dispatch:
+
+jobs:
+    Create_Latest_Release:
+      runs-on: [standard]
+      steps:
+        - name: checkout-repo
+          uses: actions/checkout@v4
+          with:
+            ref: main
+            fetch-depth: 0
+
+        - name: Get Release Dates
+          run: |
+            Current_Date=`date +%u`
+            sum=$((18-$Current_Date))
+            echo 'RELEASE_BRANCH_DATE= $(date -d "$sum days" +%Y%m%d)' >>$GITHUB_ENV
+
+
+        - name: Create 6pm Branch
+          run: |
+            RELEASE_BRANCH= "Release-6PM-$env.RELEASE_BRANCH_DATE"
+            git checkout -b $RELEASE_BRANCH
+            git commit --allow empty -m "Initial Commit for $RELEASE_BRANCH"
+            git push origin $RELEASE_BRANCH  
+            gh pr create \
+              --title "6pm release for $env.RELEASE_BRANCH_DATE" \
+              --base main \
+              --head $RELEASE_BRANCH 
+
+        
+        - name : Reset Branch
+          uses: actions/checkout@v4
+          with:
+            ref: main
+            fetch-depth: 0
+          
+        - name: Create 8pm Branch
+          run: |
+            RELEASE_BRANCH= "Release-8PM-$env.RELEASE_BRANCH_DATE"
+            git checkout -b $RELEASE_BRANCH
+            git commit --allow empty -m "Initial Commit for $RELEASE_BRANCH"
+            git push origin $RELEASE_BRANCH
+            gh pr create \
+              --title "8pm release for $env.RELEASE_BRANCH_DATE" \
+              --base main \
+              --head $RELEASE_BRANCH
+
+      
+    Cleanup_Previous_Release:
+      runs-on: [standard]
+      steps:
+        - name: get previous release date
+          run: |
+            Current_Date=`date +%u`
+            sum=$((-3 - $Current_Date))
+            echo 'PREV_DATE= $(date -d "$sum days" +%Y%m%d)' >>$GITHUB_ENV
+        - name: Delete Branch
+          run: |
+            RELEASE_BRANCH= "Release-$env.PREV_DATE"
+            git push origin -d $RELEASE_BRANCH
