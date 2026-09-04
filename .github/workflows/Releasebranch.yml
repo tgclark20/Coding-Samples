@@ -93,5 +93,5 @@ jobs:
             echo 'PREV_DATE=$(date -d "$sum days" +%Y%m%d)' >>$GITHUB_ENV
         - name: Delete Branch
           run: |
-            RELEASE_BRANCH= "Release-COMM-$PREV_DATE"
+            RELEASE_BRANCH= "Release-COMM-${PREV_DATE}"
             git push origin -d $RELEASE_BRANCH
