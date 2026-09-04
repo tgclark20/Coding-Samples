@@ -86,6 +86,12 @@ jobs:
     Cleanup_Previous_Release:
       runs-on: ubuntu-latest
       steps:
+        - name: checkout-repo
+          uses: actions/checkout@v4
+          with:
+            ref: main
+            fetch-depth: 0
+            
         - name: get previous release date
           run: |
             Current_Date=$(date +%u)
