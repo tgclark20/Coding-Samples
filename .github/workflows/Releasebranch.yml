@@ -22,18 +22,18 @@ jobs:
             sum=$((18 - Current_Date))
             echo "RELEASE_BRANCH_DATE=$(date -d "$sum days" +%Y%m%d)" >> $GITHUB_ENV
         
-        - name: Create 6pm Branch
+        - name: Create Comm Branch
           env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
-            RELEASE_BRANCH="Release-6PM-${RELEASE_BRANCH_DATE}"
+            RELEASE_BRANCH="Release-COMM-${RELEASE_BRANCH_DATE}"
             git config --local user.email "github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
             git checkout -b "$RELEASE_BRANCH"
             git commit --allow-empty -m "Initial Commit for $RELEASE_BRANCH"
             git push origin "$RELEASE_BRANCH"
             gh pr create \
-              --title "6pm release for ${RELEASE_BRANCH_DATE}" \
+              --title "COMM release for ${RELEASE_BRANCH_DATE}" \
               --body "Release branch"
               --base main \
               --head "$RELEASE_BRANCH"
@@ -45,17 +45,43 @@ jobs:
             ref: main
             fetch-depth: 0
           
-        - name: Create 8pm Branch
+        - name: Create Corp Branch
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
-            RELEASE_BRANCH= "Release-8PM-$env.RELEASE_BRANCH_DATE"
-            git checkout -b $RELEASE_BRANCH
-            git commit --allow empty -m "Initial Commit for $RELEASE_BRANCH"
-            git push origin $RELEASE_BRANCH
+            RELEASE_BRANCH="Release-CORP-${RELEASE_BRANCH_DATE}"
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git checkout -b "$RELEASE_BRANCH"
+            git commit --allow-empty -m "Initial Commit for $RELEASE_BRANCH"
+            git push origin "$RELEASE_BRANCH"
             gh pr create \
-              --title "8pm release for $env.RELEASE_BRANCH_DATE" \
+              --title "COMM release for ${RELEASE_BRANCH_DATE}" \
+              --body "Release branch"
               --base main \
-              --head $RELEASE_BRANCH
-
+              --head "$RELEASE_BRANCH"
+              
+        - name : Reset Branch 2
+          uses: actions/checkout@v4
+          with:
+            ref: main
+            fetch-depth: 0
+          
+        - name: Create Corp Branch
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            RELEASE_BRANCH="Release-GOV-${RELEASE_BRANCH_DATE}"
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git checkout -b "$RELEASE_BRANCH"
+            git commit --allow-empty -m "Initial Commit for $RELEASE_BRANCH"
+            git push origin "$RELEASE_BRANCH"
+            gh pr create \
+              --title "COMM release for ${RELEASE_BRANCH_DATE}" \
+              --body "Release branch"
+              --base main \
+              --head "$RELEASE_BRANCH"
       
     Cleanup_Previous_Release:
       runs-on: ubuntu-latest
