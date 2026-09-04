@@ -101,3 +101,7 @@ jobs:
           run: |
             RELEASE_BRANCH="Release-COMM-${PREV_DATE}"
             git push origin -d $RELEASE_BRANCH
+            RELEASE_BRANCH="Release-CORP-${PREV_DATE}"
+            git push origin -d $RELEASE_BRANCH
+            RELEASE_BRANCH="Release-GOV-${PREV_DATE}"
+            git push origin -d $RELEASE_BRANCH
