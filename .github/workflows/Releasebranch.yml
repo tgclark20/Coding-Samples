@@ -34,6 +34,7 @@ jobs:
             git push origin "$RELEASE_BRANCH"
             gh pr create \
               --title "6pm release for ${RELEASE_BRANCH_DATE}" \
+              --body "Release branch"
               --base main \
               --head "$RELEASE_BRANCH"
 
@@ -57,7 +58,7 @@ jobs:
 
       
     Cleanup_Previous_Release:
-      runs-on: [standard]
+      runs-on: ubuntu-latest
       steps:
         - name: get previous release date
           run: |
